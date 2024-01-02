@@ -1,1 +1,0 @@
-# JP Schools admin panel
