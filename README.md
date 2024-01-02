@@ -1,1 +1,1 @@
-# jp-schools-frontend
+# JP Schools admin panel
