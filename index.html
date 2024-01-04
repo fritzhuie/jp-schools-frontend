@@ -1,13 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="app.js"></script>
-</head>
-<body>
-    <a href="search.html" class="button-link">Log in with Google</a>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome</title>
+        <link rel="stylesheet" href="style.css" />
+        <script defer src="app.js"></script>
+    </head>
+    <body>
+        <div class="login" hidden>
+            <h1>Login</h1>
+            <form>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" required /><br /><br />
+                <button type="submit">Login</button>
+                <button type="button" onclick="showSignup()">Sign Up</button>
+            </form>
+        </div>
+
+        <div class="signup">
+            <h1>Sign Up</h1>
+            <form>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" required /><br /><br />
+                <label for="username">Username:</label>
+                <input type="text" id="username" required /><br /><br />
+
+                <label for="firstName">First Name:</label>
+
+                <input type="text" id="firstName" /><br /><br />
+
+                <label for="lastName">Last Name:</label>
+
+                <input type="text" id="lastName" /><br /><br />
+
+                <label for="gender">Gender:</label>
+                <select id="gender">
+                    <option value="they">They/Them</option>
+                    <option value="he">He/Him</option>
+                    <option value="she">She/Her</option>
+                </select>
+                <button type="submit">Sign Up</button>
+                <a href="#" onclick="showLogin()">Already have an account? Please log in.</a>
+            </form>
+        </div>
+        <div class="friend-finder" hidden>
+            <h1>Friend Finder</h1>
+        </div>
+
+        <div class="inbox" hidden>
+            <h1>Inbox</h1>
+        </div>
+
+        <div class="polls" hidden>
+            <h1>Polls</h1>
+        </div>
+
+        <div class="profile" hidden>
+            <h1>Profile</h1>
+            <img src="" alt="Profile Image">
+            <p class="username">@username</p>
+            <p class="first-name">First Name</p>
+            <p class="last-name">Last Name</p>
+            <p class="gender">Gender</p>
+        </div>
+
+        <div class="tabs">
+            <button onclick="switchView(TabView.LOGIN)">Login</button>
+            <button onclick="switchView(TabView.SIGNUP)">Sign Up</button>
+            <button onclick="switchView(TabView.INBOX)">Inbox</button>
+            <button onclick="switchView(TabView.POLLS)">Polls</button>
+            <button onclick="switchView(TabView.PROFILE)">Profile</button>
+            <button onclick="switchView(TabView.FRIEND_FINDER)">Friend Finder</button>
+          </div>
+
+        <script>
+            function showLogin() {
+                document.querySelector(".login").hidden = false
+                document.querySelector(".signup").hidden = true
+                // Hide other tabs as needed
+            }
+
+            function showSignup() {
+                document.querySelector(".login").hidden = true
+                document.querySelector(".signup").hidden = false
+                // Hide other tabs as needed
+            }
+        </script>
+    </body>
 </html>
