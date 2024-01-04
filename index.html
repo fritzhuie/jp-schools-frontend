@@ -5,16 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Welcome</title>
         <link rel="stylesheet" href="style.css" />
-        <script defer src="app.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+        <script src="app.js" defer></script>
     </head>
     <body>
         <div class="login" hidden>
             <h1>Login</h1>
             <form>
                 <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" required /><br /><br />
+                <input type="tel" id="phone" pattern="[0-9]{9}" required /><br /><br />
                 <button type="submit">Login</button>
-                <button type="button" onclick="showSignup()">Sign Up</button>
+                <a href="#" onclick="showSignup()">Sign up</a>
             </form>
         </div>
 
@@ -41,7 +42,7 @@
                     <option value="she">She/Her</option>
                 </select>
                 <button type="submit">Sign Up</button>
-                <a href="#" onclick="showLogin()">Already have an account? Please log in.</a>
+                <a href="#" onclick="showLogin()">Log in</a>
             </form>
         </div>
         <div class="friend-finder" hidden>
@@ -65,9 +66,7 @@
             <p class="gender">Gender</p>
         </div>
 
-        <div class="tabs">
-            <button onclick="switchView(TabView.LOGIN)">Login</button>
-            <button onclick="switchView(TabView.SIGNUP)">Sign Up</button>
+        <div class="tabs" hidden>
             <button onclick="switchView(TabView.INBOX)">Inbox</button>
             <button onclick="switchView(TabView.POLLS)">Polls</button>
             <button onclick="switchView(TabView.PROFILE)">Profile</button>
@@ -75,17 +74,7 @@
           </div>
 
         <script>
-            function showLogin() {
-                document.querySelector(".login").hidden = false
-                document.querySelector(".signup").hidden = true
-                // Hide other tabs as needed
-            }
-
-            function showSignup() {
-                document.querySelector(".login").hidden = true
-                document.querySelector(".signup").hidden = false
-                // Hide other tabs as needed
-            }
+            
         </script>
     </body>
 </html>
