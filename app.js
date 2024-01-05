@@ -25,6 +25,7 @@ const lastNameElement = document.querySelector(".last-name")
 const genderElement = document.querySelector(".gender")
 
 // friend recommendations
+const friendInvites = document.getElementById("friend-invitations-container")
 const friendRecommendations = document.getElementById("friend-recommendation-container")
 
 // polls
@@ -32,6 +33,9 @@ const polls = document.getElementById("poll-container")
 
 //inbox
 const inboxContainer = document.getElementById("inbox-container")
+
+// portrait select
+const portraitSelect = document.getElementById("portrait-select")
 
 let currentView = null
 
@@ -42,6 +46,7 @@ const TabView = {
     POLLS: "polls",
     PROFILE: "profile",
     FRIEND_FINDER: "friend-finder",
+    AVATAR_SELECT: "avatar-selection"
 }
 
 function switchView(view) {
@@ -51,6 +56,7 @@ function switchView(view) {
     pollsDiv.hidden = true
     profileDiv.hidden = true
     friendFinderDiv.hidden = true
+    portraitSelect.hidden = true
 
     tabviewDiv.hidden = false
 
@@ -74,6 +80,10 @@ function switchView(view) {
             friendFinderDiv.hidden = false
             handleFriendFinderView()
             break
+        case TabView.AVATAR_SELECT:
+            tabviewDiv.hidden = true
+            portraitSelect.hidden = false
+            
     }
 
     currentView = view
@@ -108,6 +118,10 @@ function handleSignupSubmit() {
     })
 }
 
+function handleProfilePictureClick() {
+
+}
+
 function handleInboxView() {
     renderInbox()
 }
@@ -124,6 +138,7 @@ function handleProfileView() {
         return profile
     }).then((profile) => {
         profileImage.src = `./img/${profile.avatar}`
+        console.log(profileImage)
         usernameElement.textContent = "@" + profile.username
         firstNameElement.textContent = profile.givenname
         lastNameElement.textContent = profile.familyname
@@ -132,6 +147,7 @@ function handleProfileView() {
 }
 
 function handleFriendFinderView() {
+
     getFriendRecommendations()
     .then(response => {
         console.log('friend finder responded', response)
@@ -262,9 +278,15 @@ function clearFriendRecommendations() {
 }
 
 function appendFriendRecommendation(user) {
+    console.log("append: ", user)
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("friend-recommendation")
 
+    const avatar = document.createElement("img")
+    avatar.alt = "Profile Image"
+    avatar.src = `./img/${user.avatar}`
+    containerDiv.appendChild(avatar)
+    console.log(avatar)
     containerDiv.appendChild(createFriendDataElement("img", user.avatar))
     containerDiv.appendChild(createFriendDataElement("h3", user.username))
     containerDiv.appendChild(createFriendDataElement("p", user.givenname))
@@ -402,4 +424,10 @@ async function renderInbox() {
         containerDiv.appendChild(message)
         inboxContainer.appendChild(containerDiv)
     }
+}
+
+async function setAvatar(number) {
+    const response = await setAvatar(number)
+    profileImage.src = `./src/portrait-${number}.png`
+    switchView(TabView.PROFILE)
 }

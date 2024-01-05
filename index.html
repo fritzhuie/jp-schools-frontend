@@ -1,3 +1,5 @@
+<!-- Deployed here: https://fancy-valkyrie-890177.netlify.app -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,8 +49,18 @@
         </div>
         <div class="friend-finder tab-container" hidden>
             <h1>Friend Finder</h1>
+            <div id="friend-invitations-container">
+                <!-- many of these will be created -->
+                <div class="friend-invite">
+                    <img class="avatar">
+                    <h3 class="username">@Dummy</h3>
+                    <p class="givenname">Dummy</p>
+                    <p class="familyname">Friend</p>
+                </div>
+            </div>
             <div id="friend-recommendation-container">
                 <div class="friend-recommendation">
+                    <!-- many of these will be created -->
                     <img class="avatar">
                     <h3 class="username">@Dummy</h3>
                     <p class="givenname">Dummy</p>
@@ -60,7 +72,7 @@
         <div class="inbox tab-container" hidden>
             <h1>Inbox</h1>
             <div id="inbox-container">
-                
+
             </div>
         </div>
 
@@ -80,14 +92,14 @@
 
         <div class="profile tab-container" hidden>
             <h1>Profile</h1>
-            <img src="./img/portrait-0.png" alt="Profile Image">
+            <img src="./img/portrait-0.png" alt="Profile Image" onclick="handleProfilePictureClick()">
             <p class="username">@username</p>
             <p class="first-name">First Name</p>
             <p class="last-name">Last Name</p>
             <p class="gender">Gender</p>
         </div>
 
-        <div class="portrait-select" hidden>
+        <div id="portrait-select" hidden>
             <img src="./img/portrait-1.png" alt="Profile Image" onclick="setAvatar(1)">
             <img src="./img/portrait-2.png" alt="Profile Image" onclick="setAvatar(2)">
             <img src="./img/portrait-3.png" alt="Profile Image" onclick="setAvatar(3)">
