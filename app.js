@@ -1,4 +1,5 @@
 
+const titleElement = document.getElementById("top-title")
 
 // Tabview *****************************************************
 
@@ -45,11 +46,14 @@ const TabView = {
     INBOX: "inbox",
     POLLS: "polls",
     PROFILE: "profile",
-    FRIEND_FINDER: "friend-finder",
+    CONNECT: "friend-finder",
     AVATAR_SELECT: "avatar-selection"
 }
 
 function switchView(view) {
+
+    console.log("switch view: ", view)
+
     signupDiv.hidden = true
     loginDiv.hidden = true
     inboxDiv.hidden = true
@@ -58,35 +62,54 @@ function switchView(view) {
     friendFinderDiv.hidden = true
     portraitSelect.hidden = true
 
-    tabviewDiv.hidden = false
+    tabviewDiv.style.opacity = 1.0
 
     switch (view) {
+        case TabView.LOGIN:
+            loginDiv.hidden = false
+            titleElement.innerText = "Login"
+            break
         case TabView.SIGNUP:
             signupDiv.hidden = false
+            titleElement.innerText = "Sign Up"
             break
         case TabView.INBOX:
             inboxDiv.hidden = false
+            titleElement.innerText = "Inbox"
             handleInboxView()
             break
         case TabView.POLLS:
+            titleElement.innerText = "Compliment"
             pollsDiv.hidden = false
             handlePollsView()
             break
         case TabView.PROFILE:
+            titleElement.innerText = "Profile"
             profileDiv.hidden = false
             handleProfileView()
             break
-        case TabView.FRIEND_FINDER:
+        case TabView.CONNECT:
+            titleElement.innerText = "Connect"
             friendFinderDiv.hidden = false
             handleFriendFinderView()
             break
         case TabView.AVATAR_SELECT:
-            tabviewDiv.hidden = true
+            titleElement.innerText = "Choose new portrait:"
             portraitSelect.hidden = false
             
     }
 
     currentView = view
+}
+
+function showLogin() {
+    document.querySelector(".login").hidden = false
+    document.querySelector(".signup").hidden = true
+}
+
+function showSignup() {
+    document.querySelector(".login").hidden = true
+    document.querySelector(".signup").hidden = false
 }
 
 // USER INPUT CALLS ***********************************************************************************************
@@ -164,6 +187,7 @@ function handleFriendFinderView() {
 
 // AXIOS CALLS - Profile **************************************************************************************************
 const baseUrl = "http://localhost:2000"
+const remoteUrl = "https://social-media-project-e59df584ea7e.herokuapp.com"
 
 async function loadBearerToken() {
     console.log(localStorage.getItem("accessToken"))

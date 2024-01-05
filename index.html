@@ -11,8 +11,8 @@
         <script src="app.js" defer></script>
     </head>
     <body>
+        <h1 id="top-title">Login</h1>
         <div class="login">
-            <h1>Login</h1>
             <form>
                 <label for="phone-login">Phone Number:</label>
                 <input type="number" id="phone-login" required /><br />
@@ -22,37 +22,32 @@
         </div>
 
         <div class="signup" hidden>
-            <h1>Sign Up</h1>
             <form>
                 <label for="phone">Phone Number:</label>
                 <input type="text" id="phone" required /><br />
                 <label for="username">Username:</label>
                 <input type="text" id="username" required /><br />
-
                 <label for="firstName">First Name:</label>
-
                 <input type="text" id="firstName" /><br />
-
                 <label for="lastName">Last Name:</label>
-
                 <input type="text" id="lastName" /><br />
-
                 <label for="gender">Pronouns:</label>
                 <select id="gender">
                     <option value="he">He/Him</option>
                     <option value="she">She/Her</option>
-                    <option value="they">They/Them)</option>
+                    <option value="they">They/Them</option>
                 </select>
-                <button type="submit" onclick="handleSignupSubmit()">Sign Up</button>
+                <button type="submit" onclick="handleSignupSubmit()">
+                    Sign Up
+                </button>
                 <a href="#" onclick="showLogin()">Log in</a>
             </form>
         </div>
         <div class="friend-finder tab-container" hidden>
-            <h1>Friend Finder</h1>
             <div id="friend-invitations-container">
                 <!-- many of these will be created -->
                 <div class="friend-invite">
-                    <img class="avatar">
+                    <img class="avatar" />
                     <h3 class="username">@Dummy</h3>
                     <p class="givenname">Dummy</p>
                     <p class="familyname">Friend</p>
@@ -61,7 +56,7 @@
             <div id="friend-recommendation-container">
                 <div class="friend-recommendation">
                     <!-- many of these will be created -->
-                    <img class="avatar">
+                    <img class="avatar" />
                     <h3 class="username">@Dummy</h3>
                     <p class="givenname">Dummy</p>
                     <p class="familyname">Friend</p>
@@ -70,16 +65,14 @@
         </div>
 
         <div class="inbox tab-container" hidden>
-            <h1>Inbox</h1>
-            <div id="inbox-container">
-
-            </div>
+            <div id="inbox-container"></div>
         </div>
 
         <div class="polls tab-container" hidden>
-            <h1>Polls</h1>
             <div id="poll-container">
                 <div class="poll">
+                    <!-- many of these will be created -->
+                    <img src="/img/portrait-0.png" />
                     <p class="emoji">😍</p>
                     <p class="message">They're super cute</p>
                     <button>Lesley</button>
@@ -91,8 +84,11 @@
         </div>
 
         <div class="profile tab-container" hidden>
-            <h1>Profile</h1>
-            <img src="./img/portrait-0.png" alt="Profile Image" onclick="handleProfilePictureClick()">
+            <img
+                src="./img/portrait-0.png"
+                alt="Profile Image"
+                onclick="handleProfilePictureClick()"
+            />
             <p class="username">@username</p>
             <p class="first-name">First Name</p>
             <p class="last-name">Last Name</p>
@@ -100,41 +96,92 @@
         </div>
 
         <div id="portrait-select" hidden>
-            <img src="./img/portrait-1.png" alt="Profile Image" onclick="setAvatar(1)">
-            <img src="./img/portrait-2.png" alt="Profile Image" onclick="setAvatar(2)">
-            <img src="./img/portrait-3.png" alt="Profile Image" onclick="setAvatar(3)">
-            <img src="./img/portrait-4.png" alt="Profile Image" onclick="setAvatar(4)">
-            <img src="./img/portrait-5.png" alt="Profile Image" onclick="setAvatar(5)">
-            <img src="./img/portrait-6.png" alt="Profile Image" onclick="setAvatar(6)">
-            <img src="./img/portrait-7.png" alt="Profile Image" onclick="setAvatar(7)">
-            <img src="./img/portrait-8.png" alt="Profile Image" onclick="setAvatar(8)">
-            <img src="./img/portrait-9.png" alt="Profile Image" onclick="setAvatar(9)">
-            <img src="./img/portrait-10.png" alt="Profile Image" onclick="setAvatar(10)">
-            <img src="./img/portrait-11.png" alt="Profile Image" onclick="setAvatar(11)">
-            <img src="./img/portrait-12.png" alt="Profile Image" onclick="setAvatar(12)">
-            <img src="./img/portrait-13.png" alt="Profile Image" onclick="setAvatar(13)">
-            <img src="./img/portrait-14.png" alt="Profile Image" onclick="setAvatar(14)">
-            <img src="./img/portrait-15.png" alt="Profile Image" onclick="setAvatar(15)">
-            <img src="./img/portrait-16.png" alt="Profile Image" onclick="setAvatar(16)">
+            <img
+                src="./img/portrait-1.png"
+                alt="Profile Image"
+                onclick="setAvatar(1)"
+            />
+            <img
+                src="./img/portrait-2.png"
+                alt="Profile Image"
+                onclick="setAvatar(2)"
+            />
+            <img
+                src="./img/portrait-3.png"
+                alt="Profile Image"
+                onclick="setAvatar(3)"
+            />
+            <img
+                src="./img/portrait-4.png"
+                alt="Profile Image"
+                onclick="setAvatar(4)"
+            />
+            <img
+                src="./img/portrait-5.png"
+                alt="Profile Image"
+                onclick="setAvatar(5)"
+            />
+            <img
+                src="./img/portrait-6.png"
+                alt="Profile Image"
+                onclick="setAvatar(6)"
+            />
+            <img
+                src="./img/portrait-7.png"
+                alt="Profile Image"
+                onclick="setAvatar(7)"
+            />
+            <img
+                src="./img/portrait-8.png"
+                alt="Profile Image"
+                onclick="setAvatar(8)"
+            />
+            <img
+                src="./img/portrait-9.png"
+                alt="Profile Image"
+                onclick="setAvatar(9)"
+            />
+            <img
+                src="./img/portrait-10.png"
+                alt="Profile Image"
+                onclick="setAvatar(10)"
+            />
+            <img
+                src="./img/portrait-11.png"
+                alt="Profile Image"
+                onclick="setAvatar(11)"
+            />
+            <img
+                src="./img/portrait-12.png"
+                alt="Profile Image"
+                onclick="setAvatar(12)"
+            />
+            <img
+                src="./img/portrait-13.png"
+                alt="Profile Image"
+                onclick="setAvatar(13)"
+            />
+            <img
+                src="./img/portrait-14.png"
+                alt="Profile Image"
+                onclick="setAvatar(14)"
+            />
+            <img
+                src="./img/portrait-15.png"
+                alt="Profile Image"
+                onclick="setAvatar(15)"
+            />
+            <img
+                src="./img/portrait-16.png"
+                alt="Profile Image"
+                onclick="setAvatar(16)"
+            />
         </div>
-
         <div class="tabs" hidden>
             <button onclick="switchView(TabView.INBOX)">Inbox</button>
             <button onclick="switchView(TabView.POLLS)">Polls</button>
             <button onclick="switchView(TabView.PROFILE)">Profile</button>
-            <button onclick="switchView(TabView.FRIEND_FINDER)">Friend Finder</button>
+            <button onclick="switchView(TabView.CONNECT)">Connect</button>
         </div>
-
-        <script>
-            function showLogin() {
-                document.querySelector(".login").hidden = false
-                document.querySelector(".signup").hidden = true
-            }
-
-            function showSignup() {
-                document.querySelector(".login").hidden = true
-                document.querySelector(".signup").hidden = false
-            }
-        </script>
     </body>
 </html>
