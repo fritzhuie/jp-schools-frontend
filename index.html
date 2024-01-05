@@ -12,9 +12,9 @@
         <div class="login" hidden>
             <h1>Login</h1>
             <form>
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" pattern="[0-9]{9}" required /><br /><br />
-                <button type="submit">Login</button>
+                <label for="phone-login">Phone Number:</label>
+                <input type="number" id="phone-login" required /><br /><br />
+                <button type="submit" onclick="handleLogin()">Login</button>
                 <a href="#" onclick="showSignup()">Sign up</a>
             </form>
         </div>
@@ -23,7 +23,7 @@
             <h1>Sign Up</h1>
             <form>
                 <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" required /><br /><br />
+                <input type="text" id="phone" required /><br /><br />
                 <label for="username">Username:</label>
                 <input type="text" id="username" required /><br /><br />
 
@@ -35,13 +35,13 @@
 
                 <input type="text" id="lastName" /><br /><br />
 
-                <label for="gender">Gender:</label>
+                <label for="gender">Pronouns:</label>
                 <select id="gender">
-                    <option value="they">They/Them</option>
                     <option value="he">He/Him</option>
                     <option value="she">She/Her</option>
+                    <option value="they">They/Them)</option>
                 </select>
-                <button type="submit">Sign Up</button>
+                <button type="submit" onclick="handleSignupSubmit()">Sign Up</button>
                 <a href="#" onclick="showLogin()">Log in</a>
             </form>
         </div>
@@ -59,11 +59,30 @@
 
         <div class="profile" hidden>
             <h1>Profile</h1>
-            <img src="" alt="Profile Image">
+            <img src="./img/portrait-0.png" alt="Profile Image">
             <p class="username">@username</p>
             <p class="first-name">First Name</p>
             <p class="last-name">Last Name</p>
             <p class="gender">Gender</p>
+        </div>
+
+        <div class="portrait-select" hidden>
+            <img src="./img/portrait-1.png" alt="Profile Image" onclick="setAvatar(1)">
+            <img src="./img/portrait-2.png" alt="Profile Image" onclick="setAvatar(2)">
+            <img src="./img/portrait-3.png" alt="Profile Image" onclick="setAvatar(3)">
+            <img src="./img/portrait-4.png" alt="Profile Image" onclick="setAvatar(4)">
+            <img src="./img/portrait-5.png" alt="Profile Image" onclick="setAvatar(5)">
+            <img src="./img/portrait-6.png" alt="Profile Image" onclick="setAvatar(6)">
+            <img src="./img/portrait-7.png" alt="Profile Image" onclick="setAvatar(7)">
+            <img src="./img/portrait-8.png" alt="Profile Image" onclick="setAvatar(8)">
+            <img src="./img/portrait-9.png" alt="Profile Image" onclick="setAvatar(9)">
+            <img src="./img/portrait-10.png" alt="Profile Image" onclick="setAvatar(10)">
+            <img src="./img/portrait-11.png" alt="Profile Image" onclick="setAvatar(11)">
+            <img src="./img/portrait-12.png" alt="Profile Image" onclick="setAvatar(12)">
+            <img src="./img/portrait-13.png" alt="Profile Image" onclick="setAvatar(13)">
+            <img src="./img/portrait-14.png" alt="Profile Image" onclick="setAvatar(14)">
+            <img src="./img/portrait-15.png" alt="Profile Image" onclick="setAvatar(15)">
+            <img src="./img/portrait-16.png" alt="Profile Image" onclick="setAvatar(16)">
         </div>
 
         <div class="tabs" hidden>
@@ -71,7 +90,7 @@
             <button onclick="switchView(TabView.POLLS)">Polls</button>
             <button onclick="switchView(TabView.PROFILE)">Profile</button>
             <button onclick="switchView(TabView.FRIEND_FINDER)">Friend Finder</button>
-          </div>
+        </div>
 
         <script>
             
