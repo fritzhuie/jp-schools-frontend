@@ -27,6 +27,9 @@ const genderElement = document.querySelector(".gender");
 // friend recommendations
 const friendRecommendations = document.getElementById("friend-recommendation-container")
 
+// polls
+const polls = document.getElementById("poll-container")
+
 let currentView = null
 
 const TabView = {
@@ -107,7 +110,18 @@ function handleInboxView() {
 }
 
 function handlePollsView() {
-
+    getPolls()
+    .then(response => {
+        console.log('poll response: ', response.data)
+        const profile = response.data
+        return profile
+    }).then(polls => {
+        console.log(friendRecommendations)
+        clearPolls()
+        for(const user of friendRecommendations) {
+            appendPolls(user)
+        }
+    })
 }
 
 function handleProfileView() {
@@ -212,15 +226,15 @@ async function inviteFriend(id) {
 }
 
 async function acceptFriend(id) {
-    const response = await axios.put(`${baseUrl}/social/friend/accept`, id)
+    const response = await axios.put(`${baseUrl}/social/friend/accept`, { phone: id })
 }
 
 async function denyFriend(id) {
-    const response = await axios.put(`${baseUrl}/social/friend/deny`, id)
+    const response = await axios.put(`${baseUrl}/social/friend/deny`, { phone: id })
 }
 
 async function removeFriend(id) {
-    const response = await axios.put(`${baseUrl}/social/friend/remove`, id)
+    const response = await axios.put(`${baseUrl}/social/friend/remove`, { phone: id })
     // id = { "phone": "123456789"}
 }
 
@@ -260,6 +274,41 @@ function appendFriendRecommendation(user) {
     containerDiv.appendChild(createFriendDataElement("h3", user.username));
     containerDiv.appendChild(createFriendDataElement("p", user.givenname));
     containerDiv.appendChild(createFriendDataElement("p", user.familyname));
+    const addButton = document.createElement("button")
+    addButton.textContent = "Send friend request"
+    addButton.onclick = () => {
+        console.log("sending request to: ", user.phone)
+        inviteFriend(user.phone)
+        .then(() => { 
+            console.log("Friend request sent to: ", user.phone)
+            addButton.hidden = true 
+        })
+        .catch(e => { console.log(e) })
+    }
+    containerDiv.appendChild(addButton)
+
+    
+    function createFriendDataElement(type, value) {
+        const element = document.createElement(type)
+        element.textContent = value
+        return element
+    }
+
+    friendRecommendations.appendChild(containerDiv)
+}
+
+function clearPolls() {
+    while (polls.firstChild) {
+        polls.removeChild(polls.firstChild);
+    }
+}
+
+function appendPolls(pollData) {
+    const containerDiv = document.createElement("div")
+    containerDiv.classList.add("poll")
+
+    containerDiv.appendChild(createFriendDataElement("h1", pollData.emoji));
+    containerDiv.appendChild(createFriendDataElement("h3", pollData.message));
     const addButton = document.createElement("button")
     addButton.textContent = "Send friend request"
     addButton.onclick = () => {
