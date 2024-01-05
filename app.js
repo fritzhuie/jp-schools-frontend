@@ -116,8 +116,8 @@ function handlePollsView() {
 function handleProfileView() {
     getProfile()
     .then(response => {
-        console.log('profile response: ', response.data)
-        const profile = response.data
+        console.log('profile response: ', response)
+        const profile = response
         return profile
     }).then((profile) => {
         profileImage.src = `./img/${profile.avatar}`
@@ -186,15 +186,15 @@ async function createProfile(data) {
 }
 
 async function getProfile() {
-    const response = await axios.get(`${baseUrl}/social/profile`, {
-        timeout: 5000
-    })
+    const response = await axios.get(`${baseUrl}/social/profile`, {})
     console.log('getProfile() returning: ', response)
-    return response
+    return response.data
 }
 
 async function getProfileByPhone(phone) {
     const response = await axios.get(`${baseUrl}/social/profile/${phone}`)
+    console.log('getProfile() returning: ', response)
+    return response.data
 }
 
 async function updateAvatar(avatarUrl) {
@@ -235,7 +235,8 @@ async function refreshPolls() {
 
 async function getPolls() {
     const response = await axios.get(`${baseUrl}/social/polls`)
-    return response
+    console.log(response)
+    return response.data.response
 }
 
 async function answerPoll(poll, chosen) {
@@ -293,37 +294,44 @@ function clearPolls() {
     }
 }
 
-function appendPoll(pollData) {
+function displayPollElement(pollData) {
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("poll")
 
-    containerDiv.appendChild(createFriendDataElement("h1", pollData.emoji))
-    containerDiv.appendChild(createFriendDataElement("h3", pollData.message))
-    containerDiv.appendChild(createChoiceButton(pollData.choice[0]))
-    containerDiv.appendChild(createChoiceButton(pollData.choice[1]))
-    containerDiv.appendChild(createChoiceButton(pollData.choice[2]))
-    containerDiv.appendChild(createChoiceButton(pollData.choice[3]))
+    const emoji = document.createElement("h1")
+    const message = document.createElement("h3")
+    emoji.textContent = pollData.emoji
+    message.textContent = pollData.message
+    containerDiv.appendChild(emoji)
+    containerDiv.appendChild(message)
 
-    
-    function createFriendDataElement(type, value) {
-        const element = document.createElement(type)
-        element.textContent = value
-        return element
-    }
+    const choice0 = pollData.senderData[0].firstname + " " + pollData.senderData[0].lastname.slice(0,1)
+    const choice1 = pollData.senderData[1].firstname + " " + pollData.senderData[1].lastname.slice(0,1)
+    const choice2 = pollData.senderData[2].firstname + " " + pollData.senderData[2].lastname.slice(0,1)
+    const choice3 = pollData.senderData[3].firstname + " " + pollData.senderData[3].lastname.slice(0,1)
 
-    function createChoiceButton(choice, pollId) {
+    console.log("poll object:", pollData)
+    console.log("poll id: ", pollData._id.toString())
+
+    containerDiv.appendChild(createChoiceButton(choice0, pollData._id.toString(), pollData.choices[0]))
+    containerDiv.appendChild(createChoiceButton(choice1, pollData._id.toString(), pollData.choices[1]))
+    containerDiv.appendChild(createChoiceButton(choice2, pollData._id.toString(), pollData.choices[2]))
+    containerDiv.appendChild(createChoiceButton(choice3, pollData._id.toString(), pollData.choices[3]))
+
+    function createChoiceButton(choice, pollId, chosen) {
+        console.log("chosen: ", chosen)
         const addButton = document.createElement("button")
         addButton.textContent = choice
         addButton.onclick = () => {
-            console.log("answering poll with: ", choice)
-            answerPoll(pollId, choice)
+            console.log("answering poll with: ", chosen)
+            const response = answerPoll(pollId, chosen)
             .then(() => { 
                 polls.removeChild(containerDiv)
                 renderNewPoll()
             })
             .catch(e => { console.log(e) })
         }
-        containerDiv.appendChild(addButton)
+        return addButton
     }
 
     polls.appendChild(containerDiv)
@@ -331,11 +339,42 @@ function appendPoll(pollData) {
 
 async function renderNewPoll() {
     clearPolls()
-    const pollsList = await getPolls()
-    console.log(pollsList)
-    if (Boolean(pollsList)) {
-        // const pollData = await Poll.findOne({id_: pollsList[0]})
-        // make a route + function to get a poll by objID
-        appendPoll(pollData)
+
+    try {
+        const pollsList = await getPolls()
+        console.log("polls from mongo:", pollsList)
+
+        if (!pollsList[0]) { 
+            console.log("no polls left")
+            const noMorePollsView = document.createElement("div")
+            noMorePollsView.classList.add("poll")
+
+            const message = document.createElement("h3")
+            message.textContent = "No more polls :("
+
+            noMorePollsView.appendChild(message)
+            polls.appendChild(noMorePollsView)
+            return
+        }
+
+        let nextPoll = pollsList[0]
+
+        console.log("rendering poll:", nextPoll)
+        nextPoll.senderData = []
+        for(const id of nextPoll.choices) {
+            console.log("pulling: ", id)
+            const user = await getProfileByPhone(id)
+            console.log(user)
+            const c = {
+                firstname: user.givenname,
+                lastname: user.familyname,
+                avatar: user.avatar
+            }
+            nextPoll.senderData.push(c)
+        }
+        console.log("added sender id to: ", nextPoll)
+        displayPollElement(nextPoll)
+    } catch (error) {
+        console.log("poll created failed: ", error)
     }
 }
