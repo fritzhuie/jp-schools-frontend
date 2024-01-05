@@ -24,6 +24,9 @@ const firstNameElement = document.querySelector(".first-name");
 const lastNameElement = document.querySelector(".last-name");
 const genderElement = document.querySelector(".gender");
 
+// friend recommendations
+const friendRecommendations = document.getElementById("friend-recommendation-container")
+
 let currentView = null
 
 const TabView = {
@@ -63,22 +66,14 @@ function switchView(view) {
             break
         case TabView.FRIEND_FINDER:
             friendFinderDiv.hidden = false
-            handleFriendFinderView
+            handleFriendFinderView()
             break
     }
 
     currentView = view
 }
 
-function showLogin() {
-    document.querySelector(".login").hidden = false
-    document.querySelector(".signup").hidden = true
-}
-
-function showSignup() {
-    document.querySelector(".login").hidden = true
-    document.querySelector(".signup").hidden = false
-}
+// USER INPUT CALLS ***********************************************************************************************
 
 function handleLogin() {
     const phoneInput = document.getElementById("phone-login")
@@ -131,7 +126,17 @@ function handleProfileView() {
 }
 
 function handleFriendFinderView() {
-
+    getFriendRecommendations()
+    .then(response => {
+        console.log('friend finder responded', response)
+        return response.data
+    }).then(friendRecommendations => {
+        console.log(friendRecommendations)
+        clearFriendRecommendations()
+        for(const user of friendRecommendations) {
+            appendFriendRecommendation(user)
+        }
+    })
 }
 
 
@@ -193,16 +198,17 @@ async function updateAvatar(avatarUrl) {
     const response = await axios.put(`${baseUrl}/social/avatar`, avatarUrl)
 }
 
-// Friend finder *******************************************************************************************
+
+// Friend management ***************************************************************************************
 
 async function getFriendRecommendations() {
     const response = await axios.get(`${baseUrl}/social/friend/finder`)
+    console.log('getFriendRecommendations() returning', response)
+    return response
 }
 
-
-// Friend management ***************************************************************************************
 async function inviteFriend(id) {
-    const response = await axios.put(`${baseUrl}/social/friend/invite`, id)
+    const response = await axios.put(`${baseUrl}/social/friend/invite`, { phone: id })
 }
 
 async function acceptFriend(id) {
@@ -236,4 +242,43 @@ async function answerPoll(answerData) {
 // Inbox **************************************************************************************************
 async function getInbox() {
     const response = await axios.get(`${baseUrl}/social/inbox`)
+}
+
+// General HTML functions ***************************
+
+function clearFriendRecommendations() {
+    while (friendRecommendations.firstChild) {
+        friendRecommendations.removeChild(friendRecommendations.firstChild);
+    }
+}
+
+function appendFriendRecommendation(user) {
+    const containerDiv = document.createElement("div")
+    containerDiv.classList.add("friend-recommendation")
+
+    containerDiv.appendChild(createFriendDataElement("img", user.avatar));
+    containerDiv.appendChild(createFriendDataElement("h3", user.username));
+    containerDiv.appendChild(createFriendDataElement("p", user.givenname));
+    containerDiv.appendChild(createFriendDataElement("p", user.familyname));
+    const addButton = document.createElement("button")
+    addButton.textContent = "Send friend request"
+    addButton.onclick = () => {
+        console.log("sending request to: ", user.phone)
+        inviteFriend(user.phone)
+        .then(() => { 
+            console.log("Friend request sent to: ", user.phone)
+            addButton.hidden = true 
+        })
+        .catch(e => { console.log(e) })
+    }
+    containerDiv.appendChild(addButton)
+
+    
+    function createFriendDataElement(type, value) {
+        const element = document.createElement(type)
+        element.textContent = value
+        return element
+    }
+
+    friendRecommendations.appendChild(containerDiv)
 }
