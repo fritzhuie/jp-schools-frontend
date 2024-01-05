@@ -18,11 +18,11 @@ const lastNameInput = document.getElementById("lastName")
 const genderInput = document.getElementById("gender")
 
 // profile page
-const profileImage = document.querySelector("img[alt='Profile Image']");
-const usernameElement = document.querySelector(".username");
-const firstNameElement = document.querySelector(".first-name");
-const lastNameElement = document.querySelector(".last-name");
-const genderElement = document.querySelector(".gender");
+const profileImage = document.querySelector("img[alt='Profile Image']")
+const usernameElement = document.querySelector(".username")
+const firstNameElement = document.querySelector(".first-name")
+const lastNameElement = document.querySelector(".last-name")
+const genderElement = document.querySelector(".gender")
 
 // friend recommendations
 const friendRecommendations = document.getElementById("friend-recommendation-container")
@@ -110,18 +110,7 @@ function handleInboxView() {
 }
 
 function handlePollsView() {
-    getPolls()
-    .then(response => {
-        console.log('poll response: ', response.data)
-        const profile = response.data
-        return profile
-    }).then(polls => {
-        console.log(friendRecommendations)
-        clearPolls()
-        for(const user of friendRecommendations) {
-            appendPolls(user)
-        }
-    })
+    renderNewPoll()
 }
 
 function handleProfileView() {
@@ -164,7 +153,7 @@ async function loadBearerToken() {
         if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`
         }
-        return config;
+        return config
     },
     (error) => {
         return error
@@ -246,10 +235,11 @@ async function refreshPolls() {
 
 async function getPolls() {
     const response = await axios.get(`${baseUrl}/social/polls`)
+    return response
 }
 
-async function answerPoll(answerData) {
-    const response = await axios.post(`${baseUrl}/social/polls/answer`, answerData)
+async function answerPoll(poll, chosen) {
+    const response = await axios.post(`${baseUrl}/social/polls/answer`, { poll: poll, chosen: chosen})
 }
 
 
@@ -262,7 +252,7 @@ async function getInbox() {
 
 function clearFriendRecommendations() {
     while (friendRecommendations.firstChild) {
-        friendRecommendations.removeChild(friendRecommendations.firstChild);
+        friendRecommendations.removeChild(friendRecommendations.firstChild)
     }
 }
 
@@ -270,10 +260,10 @@ function appendFriendRecommendation(user) {
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("friend-recommendation")
 
-    containerDiv.appendChild(createFriendDataElement("img", user.avatar));
-    containerDiv.appendChild(createFriendDataElement("h3", user.username));
-    containerDiv.appendChild(createFriendDataElement("p", user.givenname));
-    containerDiv.appendChild(createFriendDataElement("p", user.familyname));
+    containerDiv.appendChild(createFriendDataElement("img", user.avatar))
+    containerDiv.appendChild(createFriendDataElement("h3", user.username))
+    containerDiv.appendChild(createFriendDataElement("p", user.givenname))
+    containerDiv.appendChild(createFriendDataElement("p", user.familyname))
     const addButton = document.createElement("button")
     addButton.textContent = "Send friend request"
     addButton.onclick = () => {
@@ -299,28 +289,20 @@ function appendFriendRecommendation(user) {
 
 function clearPolls() {
     while (polls.firstChild) {
-        polls.removeChild(polls.firstChild);
+        polls.removeChild(polls.firstChild)
     }
 }
 
-function appendPolls(pollData) {
+function appendPoll(pollData) {
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("poll")
 
-    containerDiv.appendChild(createFriendDataElement("h1", pollData.emoji));
-    containerDiv.appendChild(createFriendDataElement("h3", pollData.message));
-    const addButton = document.createElement("button")
-    addButton.textContent = "Send friend request"
-    addButton.onclick = () => {
-        console.log("sending request to: ", user.phone)
-        inviteFriend(user.phone)
-        .then(() => { 
-            console.log("Friend request sent to: ", user.phone)
-            addButton.hidden = true 
-        })
-        .catch(e => { console.log(e) })
-    }
-    containerDiv.appendChild(addButton)
+    containerDiv.appendChild(createFriendDataElement("h1", pollData.emoji))
+    containerDiv.appendChild(createFriendDataElement("h3", pollData.message))
+    containerDiv.appendChild(createChoiceButton(pollData.choice[0]))
+    containerDiv.appendChild(createChoiceButton(pollData.choice[1]))
+    containerDiv.appendChild(createChoiceButton(pollData.choice[2]))
+    containerDiv.appendChild(createChoiceButton(pollData.choice[3]))
 
     
     function createFriendDataElement(type, value) {
@@ -329,5 +311,31 @@ function appendPolls(pollData) {
         return element
     }
 
-    friendRecommendations.appendChild(containerDiv)
+    function createChoiceButton(choice, pollId) {
+        const addButton = document.createElement("button")
+        addButton.textContent = choice
+        addButton.onclick = () => {
+            console.log("answering poll with: ", choice)
+            answerPoll(pollId, choice)
+            .then(() => { 
+                polls.removeChild(containerDiv)
+                renderNewPoll()
+            })
+            .catch(e => { console.log(e) })
+        }
+        containerDiv.appendChild(addButton)
+    }
+
+    polls.appendChild(containerDiv)
+}
+
+async function renderNewPoll() {
+    clearPolls()
+    const pollsList = await getPolls()
+    console.log(pollsList)
+    if (Boolean(pollsList)) {
+        // const pollData = await Poll.findOne({id_: pollsList[0]})
+        // make a route + function to get a poll by objID
+        appendPoll(pollData)
+    }
 }
