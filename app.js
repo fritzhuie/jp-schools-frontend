@@ -30,6 +30,9 @@ const friendRecommendations = document.getElementById("friend-recommendation-con
 // polls
 const polls = document.getElementById("poll-container")
 
+//inbox
+const inboxContainer = document.getElementById("inbox-container")
+
 let currentView = null
 
 const TabView = {
@@ -106,7 +109,7 @@ function handleSignupSubmit() {
 }
 
 function handleInboxView() {
-    
+    renderInbox()
 }
 
 function handlePollsView() {
@@ -247,6 +250,7 @@ async function answerPoll(poll, chosen) {
 // Inbox **************************************************************************************************
 async function getInbox() {
     const response = await axios.get(`${baseUrl}/social/inbox`)
+    return response.data.response
 }
 
 // General HTML functions ***************************
@@ -286,12 +290,6 @@ function appendFriendRecommendation(user) {
     }
 
     friendRecommendations.appendChild(containerDiv)
-}
-
-function clearPolls() {
-    while (polls.firstChild) {
-        polls.removeChild(polls.firstChild)
-    }
 }
 
 function displayPollElement(pollData) {
@@ -338,7 +336,9 @@ function displayPollElement(pollData) {
 }
 
 async function renderNewPoll() {
-    clearPolls()
+    while (polls.firstChild) {
+        polls.removeChild(polls.firstChild)
+    }
 
     try {
         const pollsList = await getPolls()
@@ -376,5 +376,30 @@ async function renderNewPoll() {
         displayPollElement(nextPoll)
     } catch (error) {
         console.log("poll created failed: ", error)
+    }
+}
+
+async function renderInbox() {
+
+    while (inboxContainer.firstChild) {
+        inboxContainer.removeChild(inboxContainer.firstChild)
+    }
+
+    inboxContainer.removeChild
+
+    const inboxData = await getInbox()
+    console.log(inboxData)
+
+    for(const inboxItem of inboxData) {
+        const containerDiv = document.createElement("div")
+        containerDiv.classList.add("inbox-item")
+
+        const emoji = document.createElement("h1")
+        const message = document.createElement("h3")
+        emoji.textContent = inboxItem.emoji
+        message.textContent = inboxItem.message
+        containerDiv.appendChild(emoji)
+        containerDiv.appendChild(message)
+        inboxContainer.appendChild(containerDiv)
     }
 }
