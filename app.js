@@ -24,10 +24,7 @@ const firstNameElement = document.querySelector(".first-name");
 const lastNameElement = document.querySelector(".last-name");
 const genderElement = document.querySelector(".gender");
 
-let profile = null
-let friends = null
-let friendRequests = []
-let polls = []
+let currentView = null
 
 const TabView = {
     LOGIN: "login",
@@ -38,8 +35,6 @@ const TabView = {
     FRIEND_FINDER: "friend-finder",
 }
 
-let currentView = TabView.signupDiv
-
 function switchView(view) {
     signupDiv.hidden = true
     loginDiv.hidden = true
@@ -47,12 +42,12 @@ function switchView(view) {
     pollsDiv.hidden = true
     profileDiv.hidden = true
     friendFinderDiv.hidden = true
+
     tabviewDiv.hidden = false
 
     switch (view) {
         case TabView.SIGNUP:
             signupDiv.hidden = false
-            tabviewDiv.hidden = true
             break
         case TabView.INBOX:
             inboxDiv.hidden = false
@@ -72,7 +67,7 @@ function switchView(view) {
             break
     }
 
-    currentView = TabView
+    currentView = view
 }
 
 function showLogin() {
@@ -124,13 +119,14 @@ function handleProfileView() {
     getProfile()
     .then(response => {
         console.log('profile response: ', response.data)
-        profile = response.data
-    }).then(() => {
-        profileImage.textContent = 
-        usernameElement.textContent = document.querySelector(".username");
-        firstNameElement.textContent = document.querySelector(".first-name");
-        lastNameElement.textContent = document.querySelector(".last-name");
-        genderElement.textContent = document.querySelector(".gender");
+        const profile = response.data
+        return profile
+    }).then((profile) => {
+        profileImage.src = `./img/${profile.avatar}`
+        usernameElement.textContent = "@" + profile.username
+        firstNameElement.textContent = profile.givenname
+        lastNameElement.textContent = profile.familyname
+        genderElement.textContent = profile.gender
     })
 }
 
@@ -165,7 +161,7 @@ async function login(phoneNumber) {
             localStorage.setItem("accessToken", token)
             await loadBearerToken()
             console.log("loadBearerToken completed")
-            switchView(tabviewDiv.FRIEND_FINDER)
+            switchView(TabView.PROFILE)
             return
         } else {
             console.log("no token found in response")
@@ -185,8 +181,8 @@ async function getProfile() {
     const response = await axios.get(`${baseUrl}/social/profile`, {
         timeout: 5000
     })
-    console.log('profile response: ', response)
-    return response.data
+    console.log('getProfile() returning: ', response)
+    return response
 }
 
 async function getProfileByPhone(phone) {
