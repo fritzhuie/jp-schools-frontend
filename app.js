@@ -175,6 +175,17 @@ function handleProfileView() {
 
 function handleFriendFinderView() {
 
+    const userProfile = getProfile()
+    .then(userProfile => {
+        console.log("user: ", userProfile)
+        for (const pending of userProfile.pending) {
+            const friendProfile = getProfileByPhone(pending)
+            .then(u => {
+                console.log("pending request from: ", u)
+            })
+        }
+    })
+
     getFriendRecommendations()
     .then(response => {
         console.log('friend finder responded', response)
@@ -306,17 +317,14 @@ function clearFriendRecommendations() {
     }
 }
 
+
 function appendFriendRecommendation(user) {
-    console.log("append: ", user)
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("friend-recommendation")
-
     const avatar = document.createElement("img")
     avatar.alt = "Profile Image"
-    avatar.src = `./img/${user.avatar}`
+    avatar.src = `./${user.avatar}`
     containerDiv.appendChild(avatar)
-    console.log(avatar)
-    containerDiv.appendChild(createFriendDataElement("img", user.avatar))
     containerDiv.appendChild(createFriendDataElement("h3", user.username))
     containerDiv.appendChild(createFriendDataElement("p", user.givenname))
     containerDiv.appendChild(createFriendDataElement("p", user.familyname))
@@ -328,6 +336,38 @@ function appendFriendRecommendation(user) {
         .then(() => { 
             console.log("Friend request sent to: ", user.phone)
             addButton.hidden = true 
+        })
+        .catch(e => { console.log(e) })
+    }
+    containerDiv.appendChild(addButton)
+
+    
+    function createFriendDataElement(type, value) {
+        const element = document.createElement(type)
+        element.textContent = value
+        return element
+    }
+
+    friendRecommendations.appendChild(containerDiv)
+}
+
+function appendFriendRequest(user) {
+    const containerDiv = document.createElement("div")
+    containerDiv.classList.add("friend-request")
+    const avatar = document.createElement("img")
+    avatar.alt = "Profile Image"
+    avatar.src = `./${user.avatar}`
+    containerDiv.appendChild(avatar)
+    containerDiv.appendChild(createFriendDataElement("h3", user.username))
+    containerDiv.appendChild(createFriendDataElement("p", user.givenname + " " + user.familyname))
+    const addButton = document.createElement("button")
+    addButton.textContent = "Accept friend request"
+    addButton.onclick = () => {
+        console.log("accepting friend request from: ", user.phone)
+        acceptFriend(user.phone)
+        .then(() => { 
+            console.log("Accepted friend request from: ", user.phone)
+            friendRecommendations.removeChild(containerDiv)
         })
         .catch(e => { console.log(e) })
     }
