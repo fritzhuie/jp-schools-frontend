@@ -23,7 +23,6 @@
             <input type="text" id="username"  placeholder="Username (must be unique)" required><br>
             <input type="text" id="firstName" placeholder="First name" required><br>
             <input type="text" id="lastName" placeholder="Last name" required><br>
-            <label for="gender">Pronouns:</label>
             <select id="gender">
                 <option value="he">He/Him</option>
                 <option value="she">She/Her</option>
@@ -31,10 +30,10 @@
             </select><br>
             <button type="submit" onclick="handleSignupSubmit()">
                 Sign Up
-            </button>
+            </button><br>
             <a href="#" onclick="showLogin()">Log in</a>
         </form>
-        <div class="friend-finder tab-container" hidden>
+        <div class="connect tab-container" hidden>
             <div id="friend-invitations-container">
                 <!-- many of these will be created -->
                 <div class="friend-invite">
@@ -56,7 +55,9 @@
         </div>
 
         <div class="inbox tab-container" hidden>
-            <div id="inbox-container"></div>
+            <div id="inbox-container">
+
+            </div>
         </div>
 
         <div class="polls tab-container" hidden>
@@ -80,7 +81,7 @@
                 alt="Profile Image"
                 onclick="handleProfilePictureClick()"
             />
-            <p class="username">@username</p>
+            <h3 class="username">@username</h3>
             <p class="first-name">First Name</p>
             <p class="last-name">Last Name</p>
             <p class="gender">Gender</p>
@@ -169,10 +170,10 @@
             />
         </div>
         <div class="tabs" hidden>
-            <button onclick="switchView(TabView.INBOX)">Inbox</button>
-            <button onclick="switchView(TabView.POLLS)">Polls</button>
-            <button onclick="switchView(TabView.PROFILE)">Profile</button>
-            <button onclick="switchView(TabView.CONNECT)">Connect</button>
+            <div onclick="switchView(TabView.INBOX)">Inbox</div>
+            <div onclick="switchView(TabView.POLLS)">Polls</div>
+            <div onclick="switchView(TabView.PROFILE)">Profile</div>
+            <div onclick="switchView(TabView.CONNECT)">Connect</div>
         </div>
     </body>
 </html>

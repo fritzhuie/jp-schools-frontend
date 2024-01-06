@@ -8,7 +8,7 @@ const signupDiv = document.querySelector(".signup")
 const inboxDiv = document.querySelector(".inbox")
 const pollsDiv = document.querySelector(".polls")
 const profileDiv = document.querySelector(".profile")
-const friendFinderDiv = document.querySelector(".friend-finder")
+const friendFinderDiv = document.querySelector(".connect")
 const tabviewDiv = document.querySelector(".tabs")
 
 // Singup page *************************************************
@@ -46,7 +46,7 @@ const TabView = {
     INBOX: "inbox",
     POLLS: "polls",
     PROFILE: "profile",
-    CONNECT: "friend-finder",
+    CONNECT: "connect",
     AVATAR_SELECT: "avatar-selection"
 }
 
@@ -75,26 +75,26 @@ function switchView(view) {
             break
         case TabView.INBOX:
             inboxDiv.hidden = false
-            titleElement.innerText = "Inbox"
+            titleElement.innerText = "See who likes you"
             handleInboxView()
             break
         case TabView.POLLS:
-            titleElement.innerText = "Compliment"
+            titleElement.innerText = "Send a Compliment"
             pollsDiv.hidden = false
             handlePollsView()
             break
         case TabView.PROFILE:
-            titleElement.innerText = "Profile"
+            titleElement.innerText = "View your Profile"
             profileDiv.hidden = false
             handleProfileView()
             break
         case TabView.CONNECT:
-            titleElement.innerText = "Connect"
+            titleElement.innerText = "Find new friends"
             friendFinderDiv.hidden = false
             handleFriendFinderView()
             break
         case TabView.AVATAR_SELECT:
-            titleElement.innerText = "Choose new portrait:"
+            titleElement.innerText = "Choose a new portrait"
             portraitSelect.hidden = false
             
     }
@@ -105,11 +105,13 @@ function switchView(view) {
 function showLogin() {
     document.querySelector(".login").hidden = false
     document.querySelector(".signup").hidden = true
+    titleElement.innerText = "Login"
 }
 
 function showSignup() {
     document.querySelector(".login").hidden = true
     document.querySelector(".signup").hidden = false
+    titleElement.innerText = "Sign up"
 }
 
 // USER INPUT CALLS ***********************************************************************************************
@@ -342,7 +344,7 @@ function displayPollElement(pollData) {
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("poll")
 
-    const emoji = document.createElement("h1")
+    const emoji = document.createElement("h2")
     const message = document.createElement("h3")
     emoji.textContent = pollData.emoji
     message.textContent = pollData.message
@@ -440,7 +442,7 @@ async function renderInbox() {
         const containerDiv = document.createElement("div")
         containerDiv.classList.add("inbox-item")
 
-        const emoji = document.createElement("h1")
+        const emoji = document.createElement("h2")
         const message = document.createElement("h3")
         emoji.textContent = inboxItem.emoji
         message.textContent = inboxItem.message

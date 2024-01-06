@@ -22,8 +22,11 @@ body, html {
     opacity: 0.0;
 }
 
-.tabs button {
+.tabs div {
     flex-grow: 1; /* Each button takes equal width */
+    text-align: center;
+    color: #034764;
+    font-size: large;
     padding: 5vw 0;
     background: white;
     border: none;
@@ -48,13 +51,13 @@ h1 {
     margin: 0;
 }
 
-.login {
+.login, .signup, .profile {
     text-align: center;
     padding: 4vh;
     margin: 60% auto;
 }
 
-.login input {
+input {
     margin: 2vw;
     width: 70%;
     padding: 2vw;
@@ -62,7 +65,7 @@ h1 {
     font-size: large;
 }
 
-.login button {
+button {
     margin: 3vw 0 6vh 0;
     width: 50%;
     padding: 3vw;
@@ -70,8 +73,14 @@ h1 {
     font-size: large;
 }
 
-.signup {
+select {
+    margin: 2vw;
+    width: 70%;
+    padding: 2vw;
     text-align: center;
-    padding: 4vh;
-    margin: 60% auto;
+    font-size:medium;
+}
+
+img {
+    border-radius: 50%;
 }
