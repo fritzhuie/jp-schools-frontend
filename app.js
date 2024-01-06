@@ -173,6 +173,7 @@ function handleProfileView() {
             return profile
         })
         .then((profile) => {
+            clearFriendsList()
             for(const friendPhone of profile.friends) {
                 console.log("searching for friend: ", friendPhone)
                 getProfileByPhone(friendPhone)
@@ -341,6 +342,11 @@ async function getInbox() {
 function clearFriendRecommendations() {
     while (friendRecommendations.firstChild) {
         friendRecommendations.removeChild(friendRecommendations.firstChild)
+    }
+}
+function clearFriendsList() {
+    while (friendsListContainerElement.firstChild) {
+        friendsListContainerElement.removeChild(friendsListContainerElement.firstChild)
     }
 }
 
