@@ -76,21 +76,21 @@ function switchView(view) {
             break
         case TabView.INBOX:
             inboxDiv.hidden = false
-            titleElement.innerText = "See who likes you"
+            titleElement.innerText = "Inbox"
             handleInboxView()
             break
         case TabView.POLLS:
-            titleElement.innerText = "Send a Compliment"
+            titleElement.innerText = "Send a Compliment!"
             pollsDiv.hidden = false
             handlePollsView()
             break
         case TabView.PROFILE:
-            titleElement.innerText = "View your Profile"
+            titleElement.innerText = "Profile"
             profileDiv.hidden = false
             handleProfileView()
             break
         case TabView.CONNECT:
-            titleElement.innerText = "Find new friends"
+            titleElement.innerText = "Connect"
             friendFinderDiv.hidden = false
             handleFriendFinderView()
             break
