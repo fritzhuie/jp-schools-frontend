@@ -65,6 +65,25 @@ input {
     font-size: large;
 }
 
+.polls {
+    text-align: center;
+    padding: 4vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.polls button {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.polls h2 {
+    font-size: 100px;
+    width: 100%;
+    text-align: center;
+    margin-top: 25vh;
+}
+
 button {
     margin: 3vw 0 6vh 0;
     width: 50%;
