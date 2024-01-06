@@ -43,7 +43,7 @@ body {
 }
 
 .inbox, .connect {
-    padding: 4vh;
+    padding: 1vh;
     margin: 8vh auto;
 }
 
@@ -78,6 +78,7 @@ input {
     padding: 4vh;
     justify-content: center;
     align-items: center;
+    margin-top:5vh;
 }
 
 .polls button {
@@ -89,7 +90,7 @@ input {
     font-size: 100px;
     width: 100%;
     text-align: center;
-    margin-top: 25vh;
+    margin-top: 20vh;
 }
 
 button {
@@ -100,7 +101,6 @@ button {
     font-size: large;
     margin: 2vw;
     border-radius: 1vh;
-    background-color: ;
 }
 
 select {
@@ -130,4 +130,65 @@ h1 {
     background-color: #bebebe;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin: 0;
+}
+
+#friend-recommendation-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2vw; /* Margin around the container */
+    gap: 1vh;
+}
+
+.friend-recommendation {
+    background-color: #fff; /* White background for each recommendation */
+    border: 1px solid #e1e1e1; /* Border to separate the items */
+    border-radius: 8px; /* Rounded corners for aesthetics */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 10px; /* Padding inside each recommendation */
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Space between elements inside the recommendation */
+}
+
+.friend-recommendation img.avatar {
+    width: 50px; /* Fixed size for avatar images */
+    height: 50px; /* Make sure it's a square */
+    border-radius: 50%; /* Circular avatar */
+    object-fit: cover; /* Cover the area without stretching the image */
+}
+
+.friend-recommendation h3,
+.friend-recommendation p {
+    margin: 0;
+}
+
+.friend-recommendation .name-container {
+    max-width: 40%;
+}
+
+.friend-recommendation button {
+    margin-left: auto;
+    padding: 1vh;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 20vw;
+    font-size: x-small;
+}
+
+.friend-recommendation button:hover {
+    background-color: #0056b3;
+}
+
+.connect-title-bar {
+    width: 90%;
+    height: 3vh;
+    margin: 1vh;
+    background-color: #bfbfbf;
+}
+
+.friend-request {
+    background-color: #d1ffd7;
 }
