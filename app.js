@@ -11,6 +11,8 @@ const profileDiv = document.querySelector(".profile")
 const friendFinderDiv = document.querySelector(".connect")
 const tabviewDiv = document.querySelector(".tabs")
 
+const phoneLoginInput = document.getElementById('phone-login')
+
 // Singup page *************************************************
 const phoneInput = document.getElementById("phone")
 const usernameInput = document.getElementById("username")
@@ -116,13 +118,13 @@ function showSignup() {
 // USER INPUT CALLS ***********************************************************************************************
 
 function handleLogin() {
-    const phoneInput = document.getElementById("phone-login")
-    login(phoneInput.value)
+    login(phoneLoginInput.value)
 }
 
 function handleSignupSubmit() {
 
     const signupData = {
+        avatar: './img/portrait-0.png',
         phone: phoneInput.value,
         username: usernameInput.value,
         givenname: firstNameInput.value,
@@ -137,8 +139,9 @@ function handleSignupSubmit() {
     .then((response) => { 
         if (response && response.status === 200) {
             console.log("Signup successful!")
-            login(signupData.phone)
         }
+        phoneLoginInput.value = phoneInput.value
+        showLogin()
     })
 }
 
@@ -161,7 +164,7 @@ function handleProfileView() {
         const profile = response
         return profile
     }).then((profile) => {
-        profileImage.src = profile.avatar
+        profileImage.src = "./" + profile.avatar
         console.log(profile)
         console.log(profile.username)
         usernameElement.textContent = "@" + profile.username
@@ -205,7 +208,6 @@ async function loadBearerToken() {
 }
 
 async function login(phoneNumber) {
-    // data = { "phone":"123456787" }
     try {
         const response = await axios.post(`${baseUrl}/social/login`, {phone: phoneNumber})
         const token = response.data.token

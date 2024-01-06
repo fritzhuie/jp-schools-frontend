@@ -4,11 +4,11 @@
     font-family: sans-serif;
 }
 
-body, html {
+body {
     margin: 0;
     padding: 0;
     max-width: 800;
-    background-color: beige;
+    background-color: aliceblue;
 }
 
 .tabs {
@@ -74,7 +74,7 @@ input {
 
 .polls button {
     width: 40%;
-    margin: 0 auto;
+    margin: 1vh;
 }
 
 .polls h2 {
@@ -90,6 +90,9 @@ button {
     padding: 3vw;
     text-align: center;
     font-size: large;
+    margin: 2vw;
+    border-radius: 1vh;
+    background-color: ;
 }
 
 select {
