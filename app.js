@@ -20,10 +20,9 @@ const genderInput = document.getElementById("gender")
 
 // profile page
 const profileImage = document.querySelector("img[alt='Profile Image']")
-const usernameElement = document.querySelector(".username")
-const firstNameElement = document.querySelector(".first-name")
-const lastNameElement = document.querySelector(".last-name")
-const genderElement = document.querySelector(".gender")
+const usernameElement = document.getElementById("profile-username")
+const firstNameElement = document.getElementById("profile-full-name")
+const genderElement = document.getElementById("profile-gender")
 
 // friend recommendations
 const friendInvites = document.getElementById("friend-invitations-container")
@@ -144,7 +143,7 @@ function handleSignupSubmit() {
 }
 
 function handleProfilePictureClick() {
-
+    switchView(TabView.AVATAR_SELECT)
 }
 
 function handleInboxView() {
@@ -162,11 +161,11 @@ function handleProfileView() {
         const profile = response
         return profile
     }).then((profile) => {
-        profileImage.src = `./img/${profile.avatar}`
-        console.log(profileImage)
+        profileImage.src = profile.avatar
+        console.log(profile)
+        console.log(profile.username)
         usernameElement.textContent = "@" + profile.username
-        firstNameElement.textContent = profile.givenname
-        lastNameElement.textContent = profile.familyname
+        firstNameElement.textContent = profile.givenname + " " + profile.familyname
         genderElement.textContent = profile.gender
     })
 }
@@ -243,7 +242,9 @@ async function getProfileByPhone(phone) {
 }
 
 async function updateAvatar(avatarUrl) {
-    const response = await axios.put(`${baseUrl}/social/avatar`, avatarUrl)
+    const response = await axios.put(`${baseUrl}/social/avatar`, {url: avatarUrl})
+    console.log(response)
+    return response
 }
 
 
@@ -452,8 +453,7 @@ async function renderInbox() {
     }
 }
 
-async function setAvatar(number) {
-    const response = await setAvatar(number)
-    profileImage.src = `./src/portrait-${number}.png`
+async function setAvatar(newAvatar) {
+    const response = await updateAvatar(newAvatar)
     switchView(TabView.PROFILE)
 }
