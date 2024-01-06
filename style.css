@@ -38,7 +38,6 @@ body {
 
 .login, .signup, .profile {
     text-align: center;
-    padding: 4vh;
     margin: 60% auto;
 }
 
@@ -191,4 +190,19 @@ h1 {
 
 .friend-request {
     background-color: #d1ffd7;
+}
+
+.title-bar-divider {
+    background-color: white;
+    color: #bebebe;
+    text-align: center;
+    padding: 2vw;
+    padding-left: 5vw;
+    border-top-left-radius: 3vh;
+    border-top-right-radius: 3vh;
+}
+
+#friends-list-container {
+    background-color: white;
+    margin: 0 auto;
 }
