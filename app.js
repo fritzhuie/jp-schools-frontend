@@ -19,27 +19,30 @@ const firstNameInput = document.getElementById("firstName")
 const lastNameInput = document.getElementById("lastName")
 const genderInput = document.getElementById("gender")
 
-// profile page
+// profile page *****************************************************
 const profileImage = document.querySelector("img[alt='Profile Image']")
 const usernameElement = document.getElementById("profile-username")
 const firstNameElement = document.getElementById("profile-full-name")
 const genderElement = document.getElementById("profile-gender")
 const friendsListContainerElement = document.getElementById("friends-list-container")
 
-// friend recommendations
+// friend recommendations *****************************************************
 const friendInvites = document.getElementById("friend-invitations-container")
-const friendRecommendations = document.getElementById(
-    "friend-recommendation-container"
-)
+const friendRecommendations = document.getElementById("friend-recommendation-container")
 
-// polls
+// polls *****************************************************
 const polls = document.getElementById("poll-container")
 
-//inbox
+//inbox *****************************************************
 const inboxContainer = document.getElementById("inbox-container")
+const inboxModal = document.getElementById("inbox-modal")
+const inboxModalEmoji = document.getElementById("inbox-modal-emoji")
+const inboxModalMessage = document.getElementById("inbox-modal-message")
 
-// portrait select
+// portrait select *****************************************************
 const portraitSelect = document.getElementById("portrait-select")
+
+// Tabview select *****************************************************
 
 let currentView = null
 
@@ -115,7 +118,7 @@ function showSignup() {
     titleElement.innerText = "Sign up"
 }
 
-// USER INPUT CALLS ***********************************************************************************************
+// USER INPUT ***********************************************************************************************
 
 function handleLogin() {
     login(phoneLoginInput.value)
@@ -156,33 +159,7 @@ function handlePollsView() {
 }
 
 function handleProfileView() {
-    getProfile()
-        .then((response) => {
-            console.log("profile response: ", response)
-            const profile = response
-            return profile
-        })
-        .then((profile) => {
-            profileImage.src = "./" + profile.avatar
-            console.log(profile)
-            console.log(profile.username)
-            usernameElement.textContent = "@" + profile.username
-            firstNameElement.textContent =
-                profile.givenname + " " + profile.familyname
-            genderElement.textContent = profile.gender
-            return profile
-        })
-        .then((profile) => {
-            clearFriendsList()
-            for(const friendPhone of profile.friends) {
-                console.log("searching for friend: ", friendPhone)
-                getProfileByPhone(friendPhone)
-                .then(friend => {
-                    console.log("adding friend: ", friend)
-                    appendFriend(friend)
-                })
-            }
-        })
+    renderProfileView()
 }
 
 function handleFriendFinderView() {
@@ -350,6 +327,8 @@ function clearFriendsList() {
     }
 }
 
+// Friends list and recommendation ********
+
 function appendFriend(user) {
     const containerDiv = document.createElement("div")
     containerDiv.classList.add("friend-recommendation")
@@ -470,6 +449,40 @@ function appendFriendRequest(user) {
 
     friendRecommendations.appendChild(containerDiv)
 }
+
+// Profile view **********************************************************************
+
+function renderProfileView() {
+    getProfile()
+    .then((response) => {
+        console.log("profile response: ", response)
+        const profile = response
+        return profile
+    })
+    .then((profile) => {
+        profileImage.src = "./" + profile.avatar
+        console.log(profile)
+        console.log(profile.username)
+        usernameElement.textContent = "@" + profile.username
+        firstNameElement.textContent =
+            profile.givenname + " " + profile.familyname
+        genderElement.textContent = profile.gender
+        return profile
+    })
+    .then((profile) => {
+        clearFriendsList()
+        for(const friendPhone of profile.friends) {
+            console.log("searching for friend: ", friendPhone)
+            getProfileByPhone(friendPhone)
+            .then(friend => {
+                console.log("adding friend: ", friend)
+                appendFriend(friend)
+            })
+        }
+    })
+}
+
+// poll view ***************************************************************
 
 function displayPollElement(pollData) {
     const containerDiv = document.createElement("div")
@@ -596,6 +609,8 @@ async function renderNewPoll() {
     }
 }
 
+// Inbox view **********************************************************************
+
 async function renderInbox() {
     while (inboxContainer.firstChild) {
         inboxContainer.removeChild(inboxContainer.firstChild)
@@ -619,6 +634,8 @@ async function renderInbox() {
         inboxContainer.appendChild(containerDiv)
     }
 }
+
+// Avatar modal **********************************************************************
 
 async function setAvatar(newAvatar) {
     const response = await updateAvatar(newAvatar)

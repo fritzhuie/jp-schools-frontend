@@ -75,7 +75,7 @@
         </div>
 
         <div class="profile tab-container" hidden>
-            <img
+            <img class="large-profile-image"
                 src="./img/portrait-0.png"
                 alt="Profile Image"
                 onclick="handleProfilePictureClick()"
@@ -169,6 +169,10 @@
             <div onclick="switchView(TabView.POLLS)">Polls</div>
             <div onclick="switchView(TabView.PROFILE)">Profile</div>
             <div onclick="switchView(TabView.CONNECT)">Connect</div>
+        </div>
+        <div id="inbox-modal" hidden>
+            <h2 id="inbox-modal-emoji">😀</h2>
+            <p id="inbox-modal-message">You are awesome</p>
         </div>
     </body>
 </html>

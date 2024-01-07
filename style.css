@@ -110,9 +110,14 @@ select {
     font-size:medium;
 }
 
-img {
+.large-profile-image {
     border-radius: 50%;
     width: 30%;
+}
+
+img {
+    border-radius: 50%;
+    width: 15%;
 }
 
 h1 {
