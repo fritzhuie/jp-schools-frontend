@@ -179,7 +179,6 @@ function handleFriendFinderView() {
         }
     })
     .then(() => {
-
         getFriendRecommendations()
         .then((response) => {
             console.log("friend finder responded", response)
@@ -451,7 +450,7 @@ function appendFriendRequest(user) {
         return element
     }
 
-    friendRecommendations.appendChild(containerDiv)
+    friendInvites.appendChild(containerDiv)
 }
 
 // Profile view ******************************************************************************
