@@ -195,8 +195,8 @@ function handleFriendFinderView() {
 
 // AXIOS CALLS - Authentication **************************************************************
 
-const baseUrl = "http://localhost:2000"
-const remoteUrl = "https://social-media-project-e59df584ea7e.herokuapp.com"
+const local = "http://localhost:2000"
+const baseUrl = "https://social-media-project-e59df584ea7e.herokuapp.com"
 
 async function loadBearerToken() {
     console.log(localStorage.getItem("accessToken"))
