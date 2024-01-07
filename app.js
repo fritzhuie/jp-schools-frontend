@@ -1,6 +1,6 @@
 const titleElement = document.getElementById("top-title")
 
-// Tabview *****************************************************
+// Tabview ***********************************************************************************
 
 const loginDiv = document.querySelector(".login")
 const signupDiv = document.querySelector(".signup")
@@ -12,37 +12,37 @@ const tabviewDiv = document.querySelector(".tabs")
 
 const phoneLoginInput = document.getElementById("phone-login")
 
-// Singup page *************************************************
+// Singup page *******************************************************************************
 const phoneInput = document.getElementById("phone")
 const usernameInput = document.getElementById("username")
 const firstNameInput = document.getElementById("firstName")
 const lastNameInput = document.getElementById("lastName")
 const genderInput = document.getElementById("gender")
 
-// profile page *****************************************************
+// profile page ******************************************************************************
 const profileImage = document.querySelector("img[alt='Profile Image']")
 const usernameElement = document.getElementById("profile-username")
 const firstNameElement = document.getElementById("profile-full-name")
 const genderElement = document.getElementById("profile-gender")
 const friendsListContainerElement = document.getElementById("friends-list-container")
 
-// friend recommendations *****************************************************
+// friend recommendations ********************************************************************
 const friendInvites = document.getElementById("friend-invitations-container")
 const friendRecommendations = document.getElementById("friend-recommendation-container")
 
-// polls *****************************************************
+// polls *************************************************************************************
 const polls = document.getElementById("poll-container")
 
-//inbox *****************************************************
+//inbox **************************************************************************************
 const inboxContainer = document.getElementById("inbox-container")
 const inboxModal = document.getElementById("inbox-modal")
 const inboxModalEmoji = document.getElementById("inbox-modal-emoji")
 const inboxModalMessage = document.getElementById("inbox-modal-message")
 
-// portrait select *****************************************************
+// portrait select ***************************************************************************
 const portraitSelect = document.getElementById("portrait-select")
 
-// Tabview select *****************************************************
+// Tabview select ****************************************************************************
 
 let currentView = null
 
@@ -118,7 +118,7 @@ function showSignup() {
     titleElement.innerText = "Sign up"
 }
 
-// USER INPUT ***********************************************************************************************
+// USER INTERACTIONS ********************************************************************************
 
 function handleLogin() {
     login(phoneLoginInput.value)
@@ -162,11 +162,14 @@ function handleProfileView() {
     renderProfileView()
 }
 
-function handleFriendFinderView() {
-    clearFriendRecommendations()
+function handleInboxModal() {
+    inboxModal.hidden = true
+}
 
+function handleFriendFinderView() {
     getProfile()
     .then((userProfile) => {
+        clearFriendRecommendations()
         console.log("user: ", userProfile)
         for (const pending of userProfile.pending) {
             const friendProfile = getProfileByPhone(pending).then((u) => {
@@ -175,8 +178,8 @@ function handleFriendFinderView() {
             })
         }
     })
-
     .then(() => {
+
         getFriendRecommendations()
         .then((response) => {
             console.log("friend finder responded", response)
@@ -191,7 +194,8 @@ function handleFriendFinderView() {
     })
 }
 
-// AXIOS CALLS - Profile **************************************************************************************************
+// AXIOS CALLS - Authentication **************************************************************
+
 const baseUrl = "http://localhost:2000"
 const remoteUrl = "https://social-media-project-e59df584ea7e.herokuapp.com"
 
@@ -233,8 +237,8 @@ async function login(phoneNumber) {
 }
 
 async function createProfile(data) {
-    // data = { "phone":"123456787", "username": "test", "familyname": "huie", "givenname": "fritz" }
     const response = await axios.post(`${baseUrl}/social/signup`, data)
+    console.log("new account created for: ", data)
 }
 
 async function getProfile() {
@@ -257,7 +261,7 @@ async function updateAvatar(avatarUrl) {
     return response
 }
 
-// Friend management ***************************************************************************************
+// Friend management *************************************************************************
 
 async function getFriendRecommendations() {
     const response = await axios.get(`${baseUrl}/social/friend/finder`)
@@ -290,7 +294,7 @@ async function removeFriend(id) {
     // id = { "phone": "123456789"}
 }
 
-// Polls ***************************************************************************************************
+// Polls *************************************************************************************
 async function refreshPolls() {
     const response = await axios.get(`${baseUrl}/social/polls/refresh`)
 }
@@ -308,7 +312,7 @@ async function answerPoll(poll, chosen) {
     })
 }
 
-// Inbox **************************************************************************************************
+// Inbox *************************************************************************************
 async function getInbox() {
     const response = await axios.get(`${baseUrl}/social/inbox`)
     return response.data.response
@@ -450,7 +454,7 @@ function appendFriendRequest(user) {
     friendRecommendations.appendChild(containerDiv)
 }
 
-// Profile view **********************************************************************
+// Profile view ******************************************************************************
 
 function renderProfileView() {
     getProfile()
@@ -482,7 +486,7 @@ function renderProfileView() {
     })
 }
 
-// poll view ***************************************************************
+// poll view *********************************************************************************
 
 function displayPollElement(pollData) {
     const containerDiv = document.createElement("div")
@@ -609,14 +613,12 @@ async function renderNewPoll() {
     }
 }
 
-// Inbox view **********************************************************************
+// Inbox view ********************************************************************************
 
 async function renderInbox() {
     while (inboxContainer.firstChild) {
         inboxContainer.removeChild(inboxContainer.firstChild)
     }
-
-    inboxContainer.removeChild
 
     const inboxData = await getInbox()
     console.log(inboxData)
@@ -624,18 +626,29 @@ async function renderInbox() {
     for (const inboxItem of inboxData) {
         const containerDiv = document.createElement("div")
         containerDiv.classList.add("inbox-item")
-
         const emoji = document.createElement("h2")
         const message = document.createElement("h3")
-        emoji.textContent = inboxItem.emoji
-        message.textContent = inboxItem.message
+
+        emoji.textContent = "🔥"
+        message.textContent = `Someone sent you a message!` 
+
+        containerDiv.onclick = () => {
+            console.log("showing modal for: ", inboxItem)
+            
+            inboxModal.style.backgroundColor = inboxItem.backgroundColor
+            inboxModalEmoji.textContent = inboxItem.emoji
+            inboxModalMessage.textContent = inboxItem.message
+
+            inboxModal.hidden = false
+        }
+
         containerDiv.appendChild(emoji)
         containerDiv.appendChild(message)
         inboxContainer.appendChild(containerDiv)
     }
 }
 
-// Avatar modal **********************************************************************
+// Avatar modal ******************************************************************************
 
 async function setAvatar(newAvatar) {
     const response = await updateAvatar(newAvatar)

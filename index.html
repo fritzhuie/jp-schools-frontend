@@ -34,6 +34,7 @@
             <a href="#" onclick="showLogin()">Log in</a>
         </form>
         <div class="connect tab-container" hidden>
+            <p class="title-bar-divider">Friend invites</p>
             <div id="friend-invitations-container">
                 <!-- many of these will be created -->
                 <!-- <div class="friend-invite">
@@ -43,6 +44,7 @@
                     <p class="familyname">Friend</p>
                 </div> -->
             </div>
+            <p class="title-bar-divider">Friend recommendations</p>
             <div id="friend-recommendation-container">
                 <!-- <div class="friend-recommendation">
                     <img class="avatar" />
@@ -170,7 +172,7 @@
             <div onclick="switchView(TabView.PROFILE)">Profile</div>
             <div onclick="switchView(TabView.CONNECT)">Connect</div>
         </div>
-        <div id="inbox-modal" hidden>
+        <div id="inbox-modal" onclick="handleInboxModal()" hidden>
             <h2 id="inbox-modal-emoji">😀</h2>
             <p id="inbox-modal-message">You are awesome</p>
         </div>
