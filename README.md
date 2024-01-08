@@ -2,17 +2,17 @@
 
 ## Description
 
-_Compliment Social_ is a social networking application designed to spread positivity by allowing users to send each other pre-written compliments anonymously. Users can engage with one another by answering polls, which are at the heart of the compliment exchange mechanism.
+_Compliment Social_ is a social networking application designed to spread positivity by allowing users to send each other pre-written compliments anonymously. Users can engage with one another by answering polls, which are at the heart of the compliment exchange mechanism
 
 ## MVP Features
 
-- **Basic Backend CRUD**: Fundamental create, read, update, and delete operations for user management.
-- **Authentication**: Users can sign up and log into the platform.
-- **Profiles**: Users can view and edit their profiles, including updating avatars.
-- **Friend Recommendations**: Users can find new friends through our recommendation system.
-- **Friend Management**: Users can send friend requests, accept requests, or deny them.
-- **Polls**: Users can answer polls which are used to generate compliments sent to others.
-- **Inbox**: A dedicated page where users can see compliments they have received.
+- **Basic Backend CRUD**: Fundamental create, read, update, and delete operations for user management
+- **Authentication**: Users can sign up and log into the platform
+- **Profiles**: Users can view and edit their profiles, including updating avatars
+- **Friend Recommendations**: Users can find new friends through our recommendation system
+- **Friend Management**: Users can send friend requests, accept requests, or deny them
+- **Polls**: Users can answer polls which are used to generate compliments sent to others
+- **Inbox**: A dedicated page where users can see compliments they have received
 
 ## Stretch Goals (Completed)
 
@@ -21,7 +21,7 @@ _Compliment Social_ is a social networking application designed to spread positi
   - Inbox
   - Profile/Friends List
   - Connect (for finding new friends)
-- **Compliment Exchange**: Users can send and receive compliments via polls.
+- **Compliment Exchange**: Users can send and receive compliments via polls
 
 ## Routes
 
@@ -41,3 +41,10 @@ GET    /polls/refresh     - Refresh the list of polls
 GET    /polls             - Get the list of polls
 POST   /polls/answer      - Answer a poll
 GET    /inbox             - Get the inbox messages
+```
+## Icebox / Next Steps
+Bug Fixes: Addressing various known bugs
+Input Sanitization: Cleaning inputs to enhance security
+More Polls: Adding a larger variety of polls for users to engage with
+UI Improvements: Enhancing the frontend aesthetic for a more pleasing user experience
+Mobile Application: Porting the application to a mobile platform to leverage notifications and mobile-specific features
