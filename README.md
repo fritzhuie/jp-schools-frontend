@@ -43,8 +43,8 @@ POST   /polls/answer      - Answer a poll
 GET    /inbox             - Get the inbox messages
 ```
 ## Icebox / Next Steps
-Bug Fixes: Addressing various known bugs
-Input Sanitization: Cleaning inputs to enhance security
-More Polls: Adding a larger variety of polls for users to engage with
-UI Improvements: Enhancing the frontend aesthetic for a more pleasing user experience
-Mobile Application: Porting the application to a mobile platform to leverage notifications and mobile-specific features
+- Bug Fixes: Addressing various known bugs
+- Input Sanitization: Cleaning inputs to enhance security
+- More Polls: Adding a larger variety of polls for users to engage with
+- UI Improvements: Enhancing the frontend aesthetic for a more pleasing user experience
+- Mobile Application: Porting the application to a mobile platform to leverage notifications and mobile-specific features
